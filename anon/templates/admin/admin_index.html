@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Admin Home{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Admin index</h2>
+        <a href="{{ url_for('.logout') }}">Logout</a>
+        <p style="float: right;">ID - {{ user.user_id }}</p>
+        <hr>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>Registered Users    -   {{ users }}</td>
+                </tr>
+                <tr>
+                    <td>Active Users    -   {{ active_users }}</td>
+                </tr>
+                {% if user.is_super %}
+                <tr>
+                    <td>Active Admins   -   {{ active_admins }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {% if user.is_super %}
+        <li><a href="{{ url_for('.modify_admins') }}">Modify Admins</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('.modify_users') }}">Modify Users</a></li>
+    </div>
+
+{% endblock %}

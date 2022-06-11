@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Login</h2>
+        <hr>
+
+        <form method="post">
+           {{ form.hidden_tag() }}
+
+            {% for categ, msg in get_flashed_messages(with_categories=True) %}
+            <div class="flash">
+                <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
+            </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="column">
+                    {{ form.user_id() }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    {{ form.password() }}
+                </div>
+            </div>
+            {{ form.login(class='button-primary') }}
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+.success {
+    color: green;
+}
+
+.info {
+    color: blue;
+}
+
+.error {
+    color: red;
+}
+
+li {
+    list-style: none;
+    margin: 0 10px 0 10px;
+}

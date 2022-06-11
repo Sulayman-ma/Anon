@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Admin - Users{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Modify Users</h2>
+        <hr>
+
+        <form method="post" style="width: 100%;" class="centralize">
+            {{ form.hidden_tag() }}
+            {{ form.search() }}
+            {{ form.query() }}
+        </form>
+
+    </div>
+
+{% endblock %}

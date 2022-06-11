@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+
+{% block body %}    
+    <div class="container">
+        <h2>Registration</h2>
+        <hr>
+        
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            {% for categ, msg in get_flashed_messages(with_categories=True) %}
+            <div class="flash">
+                <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
+            </div>
+            {% endfor %}
+
+            <!-- USER INFO FIELD SET -->
+            <fieldset>
+                <legend>User Information</legend>
+
+                <div class="row">
+                    <div class="four columns">
+                        {{ form.fname() }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.mname() }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.lname() }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="one columns">
+                        Gender:
+                    </div>
+                    {% for field in form.gender %}
+                    <div class="two columns" style="display: flex;">
+                        {{ field.label }}{{ field }}
+                    </div>
+                    {% endfor %}
+                    <div class="seven columns">
+                        {{ form.email() }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="two columns">
+                        {{ form.phone() }}
+                    </div>
+                    <div class="three columns">
+                        {{ form.state() }}
+                    </div>
+                    <div class="seven columns">
+                        {{ form.address() }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- NEXT OF KIN INFO FIELD SET -->
+            <fieldset>
+                <legend>Next of Kin Information</legend>
+
+                <div class="row">
+                    <div class="six columns">
+                        {{ form.nk_name() }}
+                    </div>
+                    <div class="six columns">
+                        {{ form.nk_relation() }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns">
+                        {{ form.nk_address() }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- CAR INFO FIELD SET -->
+            <fieldset>
+                <legend>Car Information</legend>
+
+                <div class="row">
+                    <div class="four columns">
+                        {{ form.plate_number() }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.model() }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.color() }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row u-pull-right">
+                {{ form.submit(class='button-primary') }}
+                <input type="reset" class="button-primary" value="CLEAR">
+            </div>
+        </form>
+    </div>
+{% endblock %}

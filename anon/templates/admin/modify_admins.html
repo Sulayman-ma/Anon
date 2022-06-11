@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Modify Admins{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Modify Admins</h2>
+        <hr>
+
+        {% if admins == [] %}
+            No registered admins
+        {% else %}
+            <form action="">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Admin ID</td>
+                            <td>Status</td>
+                        </tr>
+                    </thead>
+        
+                    <tbody>   
+                        {% for ad in admins %}
+                        <tr>
+                            <td>{{ ad.user_id }}</td>
+                            {% if ad.is_active %}
+                            <td>
+                                <input type="checkbox" checked name="{{ ad.user_id }}">
+                            </td>
+                            {% else %}
+                            <td>
+                                <input type="checkbox" name="{{ ad.user_id }}">
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="submit" value="Apply Changes" class="button-primary">
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}
