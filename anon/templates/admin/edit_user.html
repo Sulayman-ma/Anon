@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Edit User</h2>
+        <p>Plate Number - {{ user.plate_number }} <br> Email - {{ user.email }}</p>
+        <div>
+            <nav style="float: right;display: flex;">
+                <li><a href="{{ url_for('.search_users') }}">Search Users</a></li>
+                {% if user.is_super %}
+                <li><a href="{{ url_for('.modify_admins') }}">Modify Admins</a></li>
+                {% endif %}
+            </nav>
+        </div>
+        <hr>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            {% for categ, msg in get_flashed_messages(with_categories=True) %}
+            <div class="flash">
+                <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
+            </div>
+            {% endfor %}
+
+            <!-- USER INFO FIELD SET -->
+            <fieldset>
+                <legend>User Information</legend>
+
+                <div class="row">
+                    <div class="four columns">
+                        {{ form.fname(value=user.f_name) }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.mname(value=user.m_name) }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.lname(value=user.l_name) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="two columns">
+                        {{ form.phone(value=user.phone) }}
+                    </div>
+                    <div class="three columns">
+                        {{ form.state(value=user.state) }}
+                    </div>
+                    <div class="seven columns">
+                        {{ form.address(value=user.address) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        {{ form.email(value=user.email) }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- NEXT OF KIN INFO FIELD SET -->
+            <fieldset>
+                <legend>Next of Kin Information</legend>
+
+                <div class="row">
+                    <div class="six columns">
+                        {{ form.nk_name(value=user.nk_full_name) }}
+                    </div>
+                    <div class="six columns">
+                        {{ form.nk_relation(value=user.nk_relation) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns">
+                        {{ form.nk_address(value=user.nk_address) }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- CAR INFO FIELD SET -->
+            <fieldset>
+                <legend>Car Information</legend>
+
+                <div class="row">
+                    <div class="four columns">
+                        {{ form.plate_number(value=user.plate_number) }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.model(value=user.model) }}
+                    </div>
+                    <div class="four columns">
+                        {{ form.color(value=user.color) }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row u-pull-right">
+                {{ form.apply(class='button-primary') }}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

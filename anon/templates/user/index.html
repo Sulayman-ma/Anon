@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Verification{% endblock %}
 
 {% block body %}
 
@@ -8,7 +8,17 @@
         <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
     </div>
     {% endfor %}
-    
-    <a href="{{ url_for('.reg') }}">Registration</a>
+
+    <div class="container">
+        <h2>Anon Verification</h2>
+        <hr>
+
+        <form method="post">
+            <input type="email" class="u-full-width" placeholder="Enter email to receive registration link">
+            <input type="submit" value="Send" class="button-primary">
+
+            <a href="{{ url_for('.reg') }}">Registration</a>
+        </form>
+    </div>
 
 {% endblock %}

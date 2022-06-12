@@ -5,8 +5,15 @@
 
     <div class="container">
         <h2>Admin index</h2>
-        <a href="{{ url_for('.logout') }}">Logout</a>
-        <p style="float: right;">ID - {{ user.user_id }}</p>
+        <div>
+            <nav style="float: right;display: flex;">
+                <li><a href="{{ url_for('.search_users') }}">Search Users</a></li>
+                {% if user.is_super %}
+                <li><a href="{{ url_for('.modify_admins') }}">Modify Admins</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('.logout') }}">Logout</a></li>
+            </nav>
+        </div>
         <hr>
 
         <table>
@@ -23,12 +30,7 @@
                 </tr>
                 {% endif %}
             </tbody>
-        </table>
-
-        {% if user.is_super %}
-        <li><a href="{{ url_for('.modify_admins') }}">Modify Admins</a></li>
-        {% endif %}
-        <li><a href="{{ url_for('.modify_users') }}">Modify Users</a></li>
+        </table>        
     </div>
 
 {% endblock %}

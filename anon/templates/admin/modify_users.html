@@ -1,18 +1,53 @@
 {% extends "base.html" %}
-{% block title %}Admin - Users{% endblock %}
+{% block title %}Modify Users{% endblock %}
 
 {% block body %}
 
     <div class="container">
         <h2>Modify Users</h2>
+        <div>
+            <nav style="float: right;display: flex;">
+                <li><a href="{{ url_for('.search_users') }}">Go back</a></li>
+                <li><a href="{{ url_for('.admin_index') }}">Home</a></li>
+            </nav>
+        </div>
         <hr>
 
-        <form method="post" style="width: 100%;" class="centralize">
-            {{ form.hidden_tag() }}
-            {{ form.search() }}
-            {{ form.query() }}
-        </form>
+        {% for categ, msg in get_flashed_messages(with_categories=True) %}
+        <div class="flash">
+            <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
+        </div>
+        {% endfor %}
 
+        {% if matches == [] %}
+            No users found!
+        {% else %}
+            <form action="" method="post">
+                <table class="u-full-width">
+                    <thead>
+                        <tr>
+                            <td>User ID</td>
+                            <td>Full Name</td>
+                            <td>Plate Number</td>
+                            <td>Phone</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in matches %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{user.f_name}} {{user.m_name}} {{user.l_name }}</td>
+                            <td>{{ user.plate_number }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td><a href="{{url_for('.edit_user',id=user.id)}}">🖊</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        {% endif %}
     </div>
 
 {% endblock %}

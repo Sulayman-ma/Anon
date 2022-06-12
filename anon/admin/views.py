@@ -1,6 +1,7 @@
-import re
+from sqlalchemy.exc import DatabaseError
 from . import admin
-from .forms import SearchForm, Login
+from .. import db
+from .forms import SearchForm, Login, EditUser
 from ..models import User, Admin
 from flask import render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required, login_user, logout_user
@@ -13,6 +14,9 @@ def login():
     if form.validate_on_submit():
         admin = Admin.query.filter_by(user_id=form.user_id.data).first()
         if admin is not None and admin.verify_password(form.password.data):
+            if not admin.is_active:
+                flash('Admin is inactive, please contact the super admin.')
+                return redirect(url_for('.login'))
             login_user(admin)
             return redirect(url_for('.admin_index'))
         flash('Invalid login details', 'error')
@@ -39,34 +43,78 @@ def admin_index():
     )
 
 
-def query_users(query):
-    users = User.query.all()
-    matches = [user for user in users if query in user.email]
-    return matches
-
-def search_users(query):
-    return
-
-@admin.route('/admin/modify_users', methods=['GET', 'POST'])
+@admin.route('/admin/search_users', methods=['GET', 'POST'])
 @login_required
-def modify_users():
+def search_users():
     form = SearchForm()
     if form.validate_on_submit():
         query = form.search.data
-        return redirect(url_for('.modify_results', query=query))
-    return render_template('admin/modify_users.html', form=form)
+        return redirect(url_for('.modify_users', query=query))
+    return render_template('admin/search_users.html', form=form)
 
 
-@admin.route('/admin/modify_results/<query>', methods=['GET', 'POST'])
+@admin.route('/admin/modify_users/<query>')
 @login_required
-def modify_results(query):
-    form = SearchForm()
-    matches = query_users(query)
-    return render_template('/admin/modify_results.html', form=form, query=query, matches=matches)
+def modify_users(query):
+    users = User.query.all()
+    matches = [user for user in users if user.email.startswith(query)]
+    # for user in users:
+    #     if user.email and user.email.startswith(query):
+    #         matches.append(user)
+    return render_template('/admin/modify_users.html', query=query, matches=matches)
 
 
-@admin.route('/admin/modfiy_admins')
+@admin.route('/admin/edit_user/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_user(id):
+    user = User.query.get(id)
+    form = EditUser()
+    if request.method == 'POST':
+        user.f_name = form.fname.data
+        user.l_name = form.lname.data
+        user.m_name = form.mname.data
+        user.phone = form.phone.data
+        user.state = form.state.data
+        user.address = form.address.data
+        user.nk_full_name = form.nk_name.data
+        user.nk_relation = form.nk_relation.data
+        user.nk_address = form.nk_address.data
+        user.plate_number = form.plate_number.data
+        user.model = form.model.data
+        user.color = form.color.data
+        try:
+            db.session.commit()
+            flash('User info updated ✔', 'success')
+            return redirect(url_for('.modify_users', query=user.email))
+        except DatabaseError:
+            flash('A database error has occured.', 'error')
+            db.session.rollback()
+            db.session.commit()
+            return redirect(url_for('.modify_users', query=user.email))
+    return render_template('admin/edit_user.html', user=user, form=form)
+
+
+@admin.route('/admin/modfiy_admins', methods=['GET', 'POST'])
 @login_required
 def modify_admins():
     admins = [admin for admin in Admin.query.all() if not admin.is_super]
+    if request.method == 'POST':
+        # do the checking of checked and unchecked boxes for admins
+        checked = request.form.getlist('checked')
+        active_list = [Admin.query.filter_by(user_id=user_id).first() for user_id in checked]
+        try:
+            for admin in admins:
+                if admin not in active_list:
+                    admin.is_active = False
+                else:
+                    admin.is_active = True
+                db.session.add(admin)
+            db.session.commit()
+            flash('Changes applies successfully ✔', 'success')
+            return redirect(url_for('.modify_admins'))
+        except DatabaseError:
+            db.session.rollback()
+            db.session.commit()
+            flash('A database error has occured, try again.', 'warning')
+            return redirect(url_for('.modify_admins'))
     return render_template('admin/modify_admins.html', admins=admins)

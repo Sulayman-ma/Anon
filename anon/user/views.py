@@ -1,3 +1,4 @@
+from sqlite3 import DatabaseError, IntegrityError
 from . import user
 from .. import db
 from ..models import User
@@ -14,8 +15,7 @@ def index():
 @user.route('/reg', methods=['GET', 'POST'])
 def reg():
     form = RegForm()
-    if request.method == 'POST':
-        # registration process
+    if form.validate_on_submit():
         user = User(
             f_name = form.fname.data, l_name = form.lname.data, m_name = form.mname.data, gender = form.gender.data, email = form.email.data,
             phone = form.phone.data, state = form.state.data,
@@ -28,9 +28,11 @@ def reg():
             db.session.commit()
             flash('User registered successfully ✔', 'success')
             return redirect(url_for('.index'))
-        except:
+        except DatabaseError:
             db.session.rollback()
             db.session.commit()
+            flash('A database error has occured, try again.', 'error')
+            return redirect(url_for('.index'))
     return render_template('user/reg.html', form=form)
 
 

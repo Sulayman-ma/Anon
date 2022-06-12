@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     {% block head %}{% endblock %}
-    <title>Anon - {% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     {% block body %}{% endblock %}

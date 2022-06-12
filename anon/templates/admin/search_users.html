@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Search Users{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Search Users</h2>
+        <div>
+            <nav style="float: right;display: flex;">
+                <li><a href="{{ url_for('.modify_admins') }}">Modify Admins</a></li>
+                <li><a href="{{ url_for('.admin_index') }}">Home</a></li>
+            </nav>
+        </div>
+        <hr>
+
+        <form method="post" style="width: 100%;" class="centralize">
+            {{ form.hidden_tag() }}
+            {{ form.search() }}
+            {{ form.query() }}
+        </form>
+
+    </div>
+
+{% endblock %}

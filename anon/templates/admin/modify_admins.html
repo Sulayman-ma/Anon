@@ -5,12 +5,24 @@
 
     <div class="container">
         <h2>Modify Admins</h2>
+        <div>
+            <nav style="float: right;display: flex;">
+                <li><a href="{{ url_for('.search_users') }}">Search Users</a></li>
+                <li><a href="{{ url_for('.admin_index') }}">Home</a></li>
+            </nav>
+        </div>
         <hr>
+
+        {% for categ, msg in get_flashed_messages(with_categories=True) %}
+        <div class="flash">
+            <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
+        </div>
+        {% endfor %}
 
         {% if admins == [] %}
             No registered admins
         {% else %}
-            <form action="">
+            <form method="post">
                 <table>
                     <thead>
                         <tr>
@@ -20,16 +32,16 @@
                     </thead>
         
                     <tbody>   
-                        {% for ad in admins %}
+                        {% for admin in admins %}
                         <tr>
-                            <td>{{ ad.user_id }}</td>
-                            {% if ad.is_active %}
+                            <td>{{ admin.user_id }}</td>
+                            {% if admin.is_active %}
                             <td>
-                                <input type="checkbox" checked name="{{ ad.user_id }}">
+                                <input type="checkbox" checked name="checked" value="{{ admin.user_id }}">
                             </td>
                             {% else %}
                             <td>
-                                <input type="checkbox" name="{{ ad.user_id }}">
+                                <input type="checkbox" name="checked" value="{{ admin.user_id }}">
                             </td>
                             {% endif %}
                         </tr>
