@@ -5,7 +5,7 @@ from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioFi
 
 class SearchForm(FlaskForm):
     search = StringField(render_kw={
-        'placeholder': 'Search user by plate number or email',
+        'placeholder': 'Search user by email',
         'class': 'u-full-width',
         'required': 'required',
         'style': 'width: 70%;'

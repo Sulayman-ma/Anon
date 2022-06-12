@@ -1,14 +1,22 @@
-from sqlite3 import DatabaseError, IntegrityError
+from sqlite3 import DatabaseError
 from . import user
-from .. import db
+from .. import db, mail
 from ..models import User
 from .forms import RegForm
-from flask import render_template, request, flash, redirect,url_for
+from flask import render_template, request, flash, redirect,url_for, current_app
+from flask_mail import Message
+
 
 
 @user.route('/', methods=['GET', 'POST'])
 def index():
     """The index view function. Confirms staff email and mails them the registration link"""
+    if request.method == 'POST':
+        msg = Message('Anon Registration', sender=current_app.config['MAIL_USERNAME'], recipients=[request.form['email']])
+        msg.body = "Welcome to Anon, here is the registration link, do not share with non staff members\n{}".format(url_for('user.reg', _external=True))
+        mail.send(msg)
+        flash('Check your inbox for the registration link.', 'info')
+        return redirect(url_for('.index'))
     return render_template('user/index.html')
 
 
@@ -34,9 +42,3 @@ def reg():
             flash('A database error has occured, try again.', 'error')
             return redirect(url_for('.index'))
     return render_template('user/reg.html', form=form)
-
-
-# @user.route('/confirm')
-# def confirmation():
-#     """User registration confirmation from link sent to their inbox"""
-#     return 'Registration verified.'

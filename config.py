@@ -6,10 +6,10 @@ class Config:
     SECRET_KEY = 'asdmnc5b4734-+*23'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
-    MAIL_SERVER='smtp.gmail.com'
+    MAIL_SERVER='smtp.mail.yahoo.com'
     MAIL_PORT = 465
-    MAIL_USERNAME = 'example@email.com'
-    MAIL_PASSWORD = '*****'
+    MAIL_USERNAME = 'smaiabba@yahoo.com'
+    MAIL_PASSWORD = 'iwyeqezrldpmcycv'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     STAFF_MAIL_PATTERNS = ['kadunapolytechnic.edu.ng', 'kadpoly.gov.ng']
