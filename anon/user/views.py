@@ -10,8 +10,15 @@ from flask_mail import Message
 
 @user.route('/', methods=['GET', 'POST'])
 def index():
-    """The index view function. Confirms staff email and mails them the registration link"""
+    """The index view function. Confirms staff email and sends them the registration link"""
     if request.method == 'POST':
+        # verify staff email
+        domain = request.form['email'].split('@')[1]
+        valid = current_app.config['STAFF_MAIL_PATTERNS']
+        if domain not in valid:
+            flash('Invalid email', 'error')
+            return redirect(url_for('.index'))
+        # send reg link
         msg = Message('Anon Registration', sender=current_app.config['MAIL_USERNAME'], recipients=[request.form['email']])
         msg.body = "Welcome to Anon, here is the registration link, do not share with non staff members\n{}".format(url_for('user.reg', _external=True))
         mail.send(msg)

@@ -3,14 +3,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from . import db, login_manager
 from flask_login import UserMixin
 from flask import current_app
-from flask_whooshalchemy import whoosh_index
 from flask import current_app
 
 
 
 class User(db.Model):
     __tablename__ = 'users'
-    __searchable__ = ['plate_number', 'email']
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), unique=True, index=True)
@@ -63,9 +61,6 @@ class User(db.Model):
         self.is_active = True
         db.session.add(self)
         return True
-
-
-# whoosh_index(current_app, User)
 
 
 class Admin(db.Model, UserMixin):

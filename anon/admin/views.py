@@ -57,7 +57,12 @@ def search_users():
 @login_required
 def modify_users(query):
     users = User.query.all()
-    matches = [user for user in users if user.email.startswith(query)]
+    query = query.strip()
+    # query is a plate number
+    if '@' not in query:
+        matches = [user for user in users if user.plate_number.startswith(query)]
+    else:
+        matches = [user for user in users if user.email.startswith(query)]
     # for user in users:
     #     if user.email and user.email.startswith(query):
     #         matches.append(user)
