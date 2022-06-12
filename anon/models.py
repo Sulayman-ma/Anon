@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from . import db, login_manager
 from flask_login import UserMixin
 from flask import current_app
-from flask_whooshalchemy import whoosh_index
+# from flask_whooshalchemy import whoosh_index
 from flask import current_app
 
 
