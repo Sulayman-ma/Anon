@@ -14,6 +14,13 @@
                 <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
             </div>
             {% endfor %}
+            <style>
+                form{
+                    background-color: rgb(147, 165, 165);
+                    padding: 10px;
+                    margin: 10px;
+                }
+            </style>
 
             <!-- USER INFO FIELD SET -->
             <fieldset>
@@ -52,8 +59,11 @@
                     <div class="three columns">
                         {{ form.state() }}
                     </div>
-                    <div class="seven columns">
+                    <div class="four columns">
                         {{ form.address() }}
+                    </div>
+                    <div class="six columns">
+                       <input type="file" onchange="readURL(this)" accept="image/*">
                     </div>
                 </div>
             </fieldset>
@@ -96,7 +106,7 @@
 
             <div class="row u-pull-right">
                 {{ form.submit(class='button-primary') }}
-                <input type="reset" class="button-primary" value="CLEAR">
+                <input type="reset" class="button-primary" value="CLEAR" style="margin-top: 15px;">
             </div>
         </form>
     </div>

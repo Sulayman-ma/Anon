@@ -1,19 +1,90 @@
 /* Flash messaged */
 /* ------------------------------- */
+
+
+
+*{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0rem;
+    padding: 0;
+    background: linear-gradient(to right,#ADA996,#F2F2F2,#DBDBDB,#EAEAEA);
+}
+.navbar{
+    margin: 0;
+    padding: 0;
+    background:linear-gradient(to top,#4b6cb7,#182848) ;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.navbar-con{
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    z-index: 1;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 50px;    
+}
+nav #logo{
+    background-color: seagreen;
+    background-image: linear-gradient(to top,#ADA996,#DBDBDB);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color:transparent;
+    display: flex;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.navbar-menu{
+    display: flex;
+    align-items: center;
+}
+.nav-links{
+    color: snow;
+    font-size: 1.5rem;
+    height: 100%;
+    width: 125px;
+}
+
 .success {
     color: green;
+    font: 700;
+    text-align: center;
+    font-size: 1.8rem;
+
 }
 
 .info {
     color: blue;
+    font: 700;
+    text-align: center;
+    font-size: 1.8rem;
 }
 
 .error {
     color: red;
+    font: 700;
+    text-align: center;
+    font-size: 1.8rem;
 }
 
 .warning {
     color: orange;
+    font: 700;
+    text-align: center;
+    font-size: 1.8rem;
 }
 
 /* Misc */
@@ -26,3 +97,4 @@ li {
 a {
     text-decoration: none;
 }
+
