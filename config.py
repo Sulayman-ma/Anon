@@ -14,6 +14,7 @@ class Config:
     MAIL_USE_SSL = True
     STAFF_MAIL_PATTERNS = ['kadunapolytechnic.edu.ng', 'kadpoly.gov.ng']
     SALT_PASSWORD = 'asldm7n3c_+w(&3984'
+    UPLOAD_FOLDER = 'anon/static/images'
     
     @staticmethod
     def init_app():

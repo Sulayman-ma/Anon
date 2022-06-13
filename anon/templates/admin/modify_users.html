@@ -41,7 +41,7 @@
                             <td>{{user.f_name}} {{user.m_name}} {{user.l_name }}</td>
                             <td>{{ user.plate_number }}</td>
                             <td>{{ user.phone }}</td>
-                            <td><a href="{{url_for('.edit_user',id=user.id)}}">🖊</a></td>
+                            <td><a href="{{url_for('.edit_user',id=user.id)}}">View more</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

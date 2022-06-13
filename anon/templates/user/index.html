@@ -4,7 +4,25 @@
 {% block body %}
 
     <div class="container">
-        <h2>Anon Verification</h2>
+        <style>
+            .container h2{
+                text-align: center;
+                font-family: monospace;
+                font-weight: 500;
+                display: flex;
+                margin: 5%;
+                background-image: linear-gradient(to right,#0F2027,#203A43,#DBDBDB);
+                background-size: 100%;
+                -webkit-background-clip: text;
+                -moz-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                -moz-text-fill-color:transparent;
+              
+            }
+            </style>
+        <h2 id="header">Kadpoly Vehicle Verification System</h2>
+      
         <hr>
 
         <form method="post">
@@ -13,9 +31,26 @@
                 <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
             </div>
             {% endfor %}
-
-            <input type="email" class="u-full-width" placeholder="Enter email to receive registration link" name="email">
+            
+            <input type="email" class="u-full-width" placeholder="Enter email to receive registration link" name="email" required>
             <input type="submit" value="Send" class="button-primary">
+
+            <a href="{{ url_for('.reg') }}" class="button">Registration</a>
+            <style>
+                form{
+                    background-color: rgb(147, 165, 165);
+                    padding: 50px;
+                    margin: 0px auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 80%;
+                }
+                input{
+                    margin: 5px;
+                    
+                }
+            </style>
         </form>
     </div>
 

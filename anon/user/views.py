@@ -5,6 +5,8 @@ from ..models import User
 from .forms import RegForm
 from flask import render_template, request, flash, redirect,url_for, current_app
 from flask_mail import Message
+from werkzeug.utils import secure_filename
+import os
 
 
 
@@ -30,7 +32,7 @@ def index():
 @user.route('/reg', methods=['GET', 'POST'])
 def reg():
     form = RegForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and request.method == 'POST':
         user = User(
             f_name = form.fname.data, l_name = form.lname.data, m_name = form.mname.data, gender = form.gender.data, email = form.email.data,
             phone = form.phone.data, state = form.state.data,
@@ -38,6 +40,22 @@ def reg():
             nk_relation = form.nk_relation.data, nk_address = form.nk_address.data, plate_number = form.plate_number.data,
             model = form.model.data, color = form.color.data
         )
+
+        # image uplaod
+        if 'photo' not in request.files:
+            flash('Please add an image')
+            return redirect(url_for('.reg'))
+        file = request.files['photo']
+        # if user does not select a file, the browser submits a nameless empty file
+        if file.filename == '':
+            flash('No file selected')
+            return redirect(url_for('.reg'))
+        if file:
+            new_name = '{}.jpg'.format(user.plate_number)
+            filename = secure_filename(new_name)
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+
+        # add user to database
         try:
             db.session.add(user)
             db.session.commit()
@@ -47,5 +65,5 @@ def reg():
             db.session.rollback()
             db.session.commit()
             flash('A database error has occured, try again.', 'error')
-            return redirect(url_for('.index'))
+            return redirect(url_for('.reg'))
     return render_template('user/reg.html', form=form)

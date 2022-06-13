@@ -3,8 +3,9 @@ from . import admin
 from .. import db
 from .forms import SearchForm, Login, EditUser
 from ..models import User, Admin
-from flask import render_template, url_for, redirect, request, flash
+from flask import render_template, url_for, redirect, request, flash, current_app
 from flask_login import current_user, login_required, login_user, logout_user
+import os
 
 
 
@@ -74,6 +75,12 @@ def modify_users(query):
 def edit_user(id):
     user = User.query.get(id)
     form = EditUser()
+    names = os.listdir(os.path.join(current_app.static_folder, 'images'))
+    images = [name for name in names if user.plate_number in name]
+    if images == []:
+        img_url = ''
+    else:
+        img_url = url_for('static', filename='images/{}'.format(images[0]), _external=True)
     if request.method == 'POST':
         user.f_name = form.fname.data
         user.l_name = form.lname.data
@@ -96,7 +103,7 @@ def edit_user(id):
             db.session.rollback()
             db.session.commit()
             return redirect(url_for('.modify_users', query=user.email))
-    return render_template('admin/edit_user.html', user=user, form=form)
+    return render_template('admin/edit_user.html', user=user, form=form, img_url=img_url)
 
 
 @admin.route('/admin/modfiy_admins', methods=['GET', 'POST'])

@@ -6,7 +6,7 @@
         <h2>Registration</h2>
         <hr>
         
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
 
             {% for categ, msg in get_flashed_messages(with_categories=True) %}
@@ -14,6 +14,14 @@
                 <li style="list-style: none;" class="{{ categ }}">{{ msg }}</li>
             </div>
             {% endfor %}
+
+            <style>
+                form{
+                    background-color: rgb(147, 165, 165);
+                    padding: 10px;
+                    margin: 10px;
+                }
+            </style>
 
             <!-- USER INFO FIELD SET -->
             <fieldset>
@@ -52,8 +60,11 @@
                     <div class="three columns">
                         {{ form.state() }}
                     </div>
-                    <div class="seven columns">
+                    <div class="four columns">
                         {{ form.address() }}
+                    </div>
+                    <div class="six columns">
+                       <input type="file" onchange="readURL(this)" accept="image/*" name="photo" required>
                     </div>
                 </div>
             </fieldset>
@@ -96,7 +107,7 @@
 
             <div class="row u-pull-right">
                 {{ form.submit(class='button-primary') }}
-                <input type="reset" class="button-primary" value="CLEAR">
+                <input type="reset" class="button-primary" value="CLEAR" style="margin-top: 15px;">
             </div>
         </form>
     </div>
