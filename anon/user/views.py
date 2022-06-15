@@ -3,11 +3,17 @@ from . import user
 from .. import db, mail
 from ..models import User
 from .forms import RegForm
-from flask import render_template, request, flash, redirect,url_for, current_app
+from flask import render_template, request, flash, redirect,url_for, current_app, send_from_directory
 from flask_mail import Message
 from werkzeug.utils import secure_filename
 import os
 
+
+
+@user.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(current_app.root_path, 'static'),
+                               'icons8-aperture-50.png')
 
 
 @user.route('/', methods=['GET', 'POST'])
