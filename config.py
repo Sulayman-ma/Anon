@@ -9,7 +9,7 @@ class Config:
     MAIL_SERVER='smtp.mail.yahoo.com'
     MAIL_PORT = 465
     MAIL_USERNAME = 'binyahya000@yahoo.com'
-    MAIL_PASSWORD = 'iwyeqezrldpmcycv'
+    MAIL_PASSWORD = 'sewefjssupnqmquc'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     STAFF_MAIL_PATTERNS = ['kadunapolytechnic.edu.ng', 'kadpoly.gov.ng']
