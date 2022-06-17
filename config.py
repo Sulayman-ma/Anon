@@ -8,12 +8,12 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
     MAIL_SERVER='smtp.mail.yahoo.com'
     MAIL_PORT = 465
-    MAIL_USERNAME = 'smaiabba@yahoo.com'
+    MAIL_USERNAME = 'binyahya000@yahoo.com'
     MAIL_PASSWORD = 'iwyeqezrldpmcycv'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     STAFF_MAIL_PATTERNS = ['kadunapolytechnic.edu.ng', 'kadpoly.gov.ng']
-    SALT_PASSWORD = 'asldm7n3c_+w(&3984'
+    SALT_PASSWORD = 'sewefjssupnqmquc'
     UPLOAD_FOLDER = 'anon/static/images'
     
     @staticmethod
